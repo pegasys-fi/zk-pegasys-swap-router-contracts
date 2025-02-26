@@ -1,11 +1,11 @@
-swap-router-contracts for zkSync Uniswap v3
+swap-router-contracts for zkSync Pegasys v3
 Copyright (C) 2023 GFX Labs, Inc.
 Licensed under GNU GPL v3 or later
 
 This software incorporates:
 swap-router-contracts
 Licensed under GNU GPL v2
-See https://github.com/Uniswap/swap-router-contracts
+See https://github.com/Pegasys/swap-router-contracts
 
   This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the

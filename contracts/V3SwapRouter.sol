@@ -2,12 +2,12 @@
 pragma solidity =0.7.6;
 pragma abicoder v2;
 
-import '@uniswap/v3-core/contracts/libraries/SafeCast.sol';
-import '@uniswap/v3-core/contracts/libraries/TickMath.sol';
-import '@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol';
-import '@uniswap/v3-periphery/contracts/libraries/Path.sol';
-import '@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol';
-import '@uniswap/v3-periphery/contracts/libraries/CallbackValidation.sol';
+import '@pegasys/v3-core/contracts/libraries/SafeCast.sol';
+import '@pegasys/v3-core/contracts/libraries/TickMath.sol';
+import '@pegasys/v3-core/contracts/interfaces/IPegasysV3Pool.sol';
+import '@pegasys/v3-periphery/contracts/libraries/Path.sol';
+import '@pegasys/v3-periphery/contracts/libraries/PoolAddress.sol';
+import '@pegasys/v3-periphery/contracts/libraries/CallbackValidation.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 import './interfaces/IV3SwapRouter.sol';
@@ -15,8 +15,8 @@ import './base/PeripheryPaymentsWithFeeExtended.sol';
 import './base/OracleSlippage.sol';
 import './libraries/Constants.sol';
 
-/// @title Uniswap V3 Swap Router
-/// @notice Router for stateless execution of swaps against Uniswap V3
+/// @title Pegasys V3 Swap Router
+/// @notice Router for stateless execution of swaps against Pegasys V3
 abstract contract V3SwapRouter is IV3SwapRouter, PeripheryPaymentsWithFeeExtended, OracleSlippage {
     using Path for bytes;
     using SafeCast for uint256;
@@ -33,8 +33,8 @@ abstract contract V3SwapRouter is IV3SwapRouter, PeripheryPaymentsWithFeeExtende
         address tokenA,
         address tokenB,
         uint24 fee
-    ) private view returns (IUniswapV3Pool) {
-        return IUniswapV3Pool(PoolAddress.computeAddress(factory, PoolAddress.getPoolKey(tokenA, tokenB, fee)));
+    ) private view returns (IPegasysV3Pool) {
+        return IPegasysV3Pool(PoolAddress.computeAddress(factory, PoolAddress.getPoolKey(tokenA, tokenB, fee)));
     }
 
     struct SwapCallbackData {
@@ -42,8 +42,8 @@ abstract contract V3SwapRouter is IV3SwapRouter, PeripheryPaymentsWithFeeExtende
         address payer;
     }
 
-    /// @inheritdoc IUniswapV3SwapCallback
-    function uniswapV3SwapCallback(
+    /// @inheritdoc IPegasysV3SwapCallback
+    function pegasysV3SwapCallback(
         int256 amount0Delta,
         int256 amount1Delta,
         bytes calldata _data

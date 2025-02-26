@@ -1,7 +1,7 @@
-import * as FACTORY_ARTIFACT from '@uniswap/v3-core/artifacts-zk/contracts/UniswapV3Factory.sol/UniswapV3Factory.json'
-import * as POOL_ARTIFACT from '@uniswap/v3-core/artifacts-zk/contracts/UniswapV3Pool.sol/UniswapV3Pool.json'
-import * as FACTORY_V2_ARTIFACT from '@uniswap/v2-core/artifacts-zk/contracts/UniswapV2Factory.sol/UniswapV2Factory.json'
-import * as PAIR_V2_ARTIFACT from '@uniswap/v2-core/artifacts-zk/contracts/UniswapV2Pair.sol/UniswapV2Pair.json'
+import * as FACTORY_ARTIFACT from '@pegasys/v3-core/artifacts-zk/contracts/PegasysV3Factory.sol/PegasysV3Factory.json'
+import * as POOL_ARTIFACT from '@pegasys/v3-core/artifacts-zk/contracts/PegasysV3Pool.sol/PegasysV3Pool.json'
+import * as FACTORY_V2_ARTIFACT from '@pegasys/v2-core/artifacts-zk/contracts/PegasysV2Factory.sol/PegasysV2Factory.json'
+import * as PAIR_V2_ARTIFACT from '@pegasys/v2-core/artifacts-zk/contracts/PegasysV2Pair.sol/PegasysV2Pair.json'
 import { IWETH9, MockTimeSwapRouter02 } from '../../typechain'
 
 import { deployContractWithArtifact, deployContract } from './zkSyncUtils'
@@ -10,7 +10,7 @@ import * as zk from 'zksync-web3'
 import { constants, ethers } from 'ethers'
 import { Wallet, Contract } from 'zksync-web3'
 
-import * as NFT_POSITION_MANAGER_ARTIFACT from '@uniswap/v3-periphery/artifacts-zk/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
+import * as NFT_POSITION_MANAGER_ARTIFACT from '@pegasys/v3-periphery/artifacts-zk/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
 import { ZkSyncArtifact } from '@matterlabs/hardhat-zksync-deploy/dist/types'
 
 async function wethFixture([wallet]: [Wallet]): Promise<{ weth9: IWETH9 }> {

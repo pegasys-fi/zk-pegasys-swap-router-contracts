@@ -1,10 +1,10 @@
 import { defaultAbiCoder } from '@ethersproject/abi'
-import { abi as PAIR_V2_ABI } from '@uniswap/v2-core/artifacts-zk/contracts/UniswapV2Pair.sol/UniswapV2Pair.json'
+import { abi as PAIR_V2_ABI } from '@pegasys/v2-core/artifacts-zk/contracts/PegasysV2Pair.sol/PegasysV2Pair.json'
 import { BigNumber, constants, Contract, ContractTransaction } from 'ethers'
 import { Wallet } from 'zksync-web3'
 import { ethers } from 'ethers'
 import { solidityPack } from 'ethers/lib/utils'
-import { IUniswapV2Pair, IWETH9, MockTimeSwapRouter02, TestERC20 } from '../typechain'
+import { IPegasysV2Pair, IWETH9, MockTimeSwapRouter02, TestERC20 } from '../typechain'
 import completeFixture from './shared/completeFixture'
 import { computePoolAddress } from './shared/computePoolAddress'
 import { ADDRESS_THIS, CONTRACT_BALANCE, FeeAmount, MSG_SENDER, TICK_SPACINGS } from './shared/constants'
@@ -946,11 +946,11 @@ describe('SwapRouter', function () {
     })
   })
 
-  async function createV2Pool(tokenA: TestERC20, tokenB: TestERC20): Promise<IUniswapV2Pair> {
+  async function createV2Pool(tokenA: TestERC20, tokenB: TestERC20): Promise<IPegasysV2Pair> {
     await (await factoryV2.createPair(tokenA.address, tokenB.address)).wait()
 
     const pairAddress = await factoryV2.getPair(tokenA.address, tokenB.address)
-    const pair = new Contract(pairAddress, PAIR_V2_ABI, wallet) as IUniswapV2Pair
+    const pair = new Contract(pairAddress, PAIR_V2_ABI, wallet) as IPegasysV2Pair
 
     await (await tokenA.transfer(pair.address, liquidity)).wait()
     await (await tokenB.transfer(pair.address, liquidity)).wait()
@@ -961,8 +961,8 @@ describe('SwapRouter', function () {
   }
 
   describe('swaps - v2', () => {
-    let pairs: IUniswapV2Pair[]
-    let wethPairs: IUniswapV2Pair[]
+    let pairs: IPegasysV2Pair[]
+    let wethPairs: IPegasysV2Pair[]
 
     async function createPoolWETH9(token: TestERC20) {
       await (await weth9.deposit({ value: liquidity })).wait()

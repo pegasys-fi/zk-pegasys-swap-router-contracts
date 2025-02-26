@@ -1,10 +1,10 @@
 import { defaultAbiCoder } from '@ethersproject/abi'
-import { abi as IUniswapV3PoolABI } from '@uniswap/v3-core/artifacts-zk/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
+import { abi as IPegasysV3PoolABI } from '@pegasys/v3-core/artifacts-zk/contracts/interfaces/IPegasysV3Pool.sol/IPegasysV3Pool.json'
 import { BigNumber, constants, ContractTransaction } from 'ethers'
 import { Wallet } from 'zksync-web3'
 import { solidityPack } from 'ethers/lib/utils'
 import { ethers } from 'hardhat'
-import { IUniswapV3Pool, IWETH9, MockTimeSwapRouter02, TestERC20 } from '../typechain'
+import { IPegasysV3Pool, IWETH9, MockTimeSwapRouter02, TestERC20 } from '../typechain'
 import completeFixture from './shared/completeFixture'
 import { ADDRESS_THIS, FeeAmount, MSG_SENDER, TICK_SPACINGS } from './shared/constants'
 import { encodePriceSqrt } from './shared/encodePriceSqrt'
@@ -25,7 +25,7 @@ describe('SwapRouter gas tests', function () {
     weth9: IWETH9
     router: MockTimeSwapRouter02
     tokens: [TestERC20, TestERC20, TestERC20]
-    pools: [IUniswapV3Pool, IUniswapV3Pool, IUniswapV3Pool]
+    pools: [IPegasysV3Pool, IPegasysV3Pool, IPegasysV3Pool]
   }> {
     const { weth9, factory, router, tokens, nft } = await completeFixture(wallets)
 
@@ -85,10 +85,10 @@ describe('SwapRouter gas tests', function () {
       factory.getPool(weth9.address, tokens[0].address, FeeAmount.MEDIUM),
     ])
 
-    const pools = poolAddresses.map((poolAddress) => new ethers.Contract(poolAddress, IUniswapV3PoolABI, wallet)) as [
-      IUniswapV3Pool,
-      IUniswapV3Pool,
-      IUniswapV3Pool
+    const pools = poolAddresses.map((poolAddress) => new ethers.Contract(poolAddress, IPegasysV3PoolABI, wallet)) as [
+      IPegasysV3Pool,
+      IPegasysV3Pool,
+      IPegasysV3Pool
     ]
 
     return {
@@ -102,7 +102,7 @@ describe('SwapRouter gas tests', function () {
   let weth9: IWETH9
   let router: MockTimeSwapRouter02
   let tokens: [TestERC20, TestERC20, TestERC20]
-  let pools: [IUniswapV3Pool, IUniswapV3Pool, IUniswapV3Pool]
+  let pools: [IPegasysV3Pool, IPegasysV3Pool, IPegasysV3Pool]
 
   function encodeUnwrapWETH9(amount: number) {
     return solidityPack(
@@ -290,7 +290,7 @@ describe('SwapRouter gas tests', function () {
     })
 
     it('0 -> 1 minimal', async () => {
-      const callee = await deployContract(wallet, 'TestUniswapV3Callee')
+      const callee = await deployContract(wallet, 'TestPegasysV3Callee')
 
       await (await tokens[0].connect(trader as any).approve(callee.address, constants.MaxUint256)).wait()
       await snapshotGasCost(
